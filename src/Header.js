@@ -10,8 +10,18 @@ import {
 import React from "react";
 import "./Header.css";
 import HeaderOptions from "./HeaderOptions";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "./features/userSclice";
+import { auth } from "./firebase";
 
 const Header = () => {
+  const user=useSelector(selectUser);
+  console.log(user);
+  const dispatch=useDispatch();
+  const userLogout=()=>{
+    dispatch(logout());
+    auth.signOut();
+  }
   return (
     <div className="header">
       <div className="header-left">
@@ -31,8 +41,9 @@ const Header = () => {
         <HeaderOptions Icon={Message} title="Messaging" />
         <HeaderOptions Icon={Notifications} title="Notifications" />
         <HeaderOptions
-          avatar="https://media.licdn.com/dms/image/C4E03AQFRA1QDFMaYZw/profile-displayphoto-shrink_100_100/0/1551001097020?e=1696464000&v=beta&t=HDp6W74pXhreUcMowP-NIL0DiIdB5e5fFaQafJf8jYI"
+          avatar="true"
           title="Me"
+          onClick={userLogout}
         />
       </div>
     </div>
